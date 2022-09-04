@@ -22,9 +22,10 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useNotesStore } from "../store/notesStore";
 import uuid from "uuid4";
-import { ref } from "vue";
+
 import ViewNote from "@/pages/ViewNote.vue";
 import TheTextarea from "../components/TheTextarea.vue";
 
@@ -44,4 +45,10 @@ const addNewNote = () => {
 const deleteNote = (id) => {
   storeNotes.deleteNote(id);
 };
+
+// watch(newNote, (text) => {
+//   if (text.length > 20) {
+//     console.log("enought");
+//   }
+// });
 </script>

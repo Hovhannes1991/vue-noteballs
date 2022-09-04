@@ -12,16 +12,24 @@
       <button @click="editNote" href="#" class="button card-footer-item">
         Edit
       </button>
-      <button @click="deleteNote" href="#" class="button card-footer-item">
+      <button @click="openDeleteModal" href="#" class="button card-footer-item">
         Delete
       </button>
     </footer>
   </div>
+
+  <NoteDeleteModal
+    v-if="modalStates.showNotedeeleteModal"
+    v-model="modalStates.showNotedeeleteModal"
+    @confirmDelete="deleteNote"
+  />
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
+import NoteDeleteModal from "@/modals/NoteDeleteModal.vue";
+
 const router = useRouter();
 
 const props = defineProps({
@@ -42,6 +50,12 @@ const emits = defineEmits(["on-delete-note"]);
 const deleteNote = () => emits("on-delete-note");
 const editNote = () =>
   router.push({ name: "edit-note", params: { id: props.note.id } });
+
+const openDeleteModal = () => (modalStates.showNotedeeleteModal = true);
+
+const modalStates = reactive({
+  showNotedeeleteModal: false,
+});
 </script>
 
 <style lang="scss" scoped></style>

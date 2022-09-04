@@ -3,8 +3,8 @@
     <div class="container is-max-desktop px-2">
       <div class="navbar-brand">
         <div class="navbar-item is-size-4 is-family-monospace">Noteballs</div>
-
         <a
+          ref="closeIcon"
           @click.prevent="showMobileNav = !showMobileNav"
           class="navbar-burger"
           :class="{ 'is-active': showMobileNav }"
@@ -24,7 +24,7 @@
         class="navbar-menu"
         :class="{ 'is-active': showMobileNav }"
       >
-        <div class="navbar-end">
+        <div ref="mobileMenu" class="navbar-end">
           <RouterLink to="/" class="navbar-item" active-class="is-active">
             Home
           </RouterLink>
@@ -49,13 +49,18 @@
 </template>
 
 <script setup>
-/*
-  imports
-*/
 import { ref } from "vue";
-/*
-  mobile nav
-*/
+import { onClickOutside } from "@vueuse/core";
+
+const closeIcon = ref(null);
+const mobileMenu = ref(null);
+onClickOutside(
+  mobileMenu,
+  () => {
+    showMobileNav.value = false;
+  },
+  { ignore: [closeIcon] }
+);
 const showMobileNav = ref(false);
 </script>
 

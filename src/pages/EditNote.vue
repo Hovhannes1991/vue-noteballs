@@ -31,6 +31,6 @@ const currentText = notesStore.getNoteCurrentValue(+props.id);
 const text = ref(currentText);
 const save = async () => {
   notesStore.updateNote(+props.id, text.value);
-  router.push({name: 'view-notes'});
+  router.push({ name: "view-notes" });
 };
 </script>
