@@ -48,7 +48,7 @@ const charactersLength = computed(() => {
 });
 
 const date = new Date(props.note.date);
-const formatedDate = useDateFormat(date, 'DD-MM-YYYY');
+const formatedDate = useDateFormat(date, "DD-MM-YYYY");
 
 const emits = defineEmits(["on-delete-note"]);
 

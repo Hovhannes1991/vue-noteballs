@@ -2,9 +2,11 @@
   <nav class="navbar is-success" aria-label="main navigation" role="navigation">
     <div class="container is-max-desktop px-2">
       <div class="navbar-brand">
-        <div class="navbar-item is-size-4 is-family-monospace">Noteballs</div>
+        <div class="navbar-item is-size-4 is-family-monospace">
+          <RouterLink to="/auth">Noteballs</RouterLink>
+        </div>
+
         <a
-          ref="closeIcon"
           @click.prevent="showMobileNav = !showMobileNav"
           class="navbar-burger"
           :class="{ 'is-active': showMobileNav }"
@@ -12,6 +14,7 @@
           aria-label="menu"
           data-target="navbarBasicExample"
           role="button"
+          ref="navbarBurgerRef"
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -23,24 +26,33 @@
         id="navbarBasicExample"
         class="navbar-menu"
         :class="{ 'is-active': showMobileNav }"
+        ref="navbarMenuRef"
       >
-        <div ref="mobileMenu" class="navbar-end">
-          <RouterLink to="/" class="navbar-item" active-class="is-active">
-            Home
-          </RouterLink>
+        <div class="navbar-start">
+          <button
+            v-if="storeAuth.user.id"
+            @click="logout"
+            class="button is-small is-info mt-3 ml-3"
+          >
+            Log out {{ storeAuth.user.email }}
+          </button>
+        </div>
+        <div class="navbar-end">
           <RouterLink
+            @click="showMobileNav = false"
             :to="{ name: 'view-notes' }"
             class="navbar-item"
             active-class="is-active"
           >
-            View Notes
+            Notes
           </RouterLink>
           <RouterLink
+            @click="showMobileNav = false"
             :to="{ name: 'view-stats' }"
             class="navbar-item"
             active-class="is-active"
           >
-            View Stats
+            Stats
           </RouterLink>
         </div>
       </div>
@@ -49,19 +61,41 @@
 </template>
 
 <script setup>
+/*
+  imports
+*/
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
-
-const closeIcon = ref(null);
-const mobileMenu = ref(null);
+import { useStoreAuth } from "@/store/storeAuth";
+/*
+  store
+*/
+const storeAuth = useStoreAuth();
+/*
+  mobile nav
+*/
+const showMobileNav = ref(false);
+/*
+  click outside to close
+*/
+const navbarMenuRef = ref(null);
+const navbarBurgerRef = ref(null);
 onClickOutside(
-  mobileMenu,
+  navbarMenuRef,
   () => {
     showMobileNav.value = false;
   },
-  { ignore: [closeIcon] }
+  {
+    ignore: [navbarBurgerRef],
+  }
 );
-const showMobileNav = ref(false);
+/*
+  logout
+*/
+const logout = () => {
+  showMobileNav.value = false;
+  storeAuth.logoutUser();
+};
 </script>
 
 <style>
