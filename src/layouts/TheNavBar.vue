@@ -2,8 +2,11 @@
   <nav class="navbar is-success" aria-label="main navigation" role="navigation">
     <div class="container is-max-desktop px-2">
       <div class="navbar-brand">
-        <div class="navbar-item is-size-4 is-family-monospace">
-          <RouterLink to="/auth">Noteballs</RouterLink>
+        <div
+          @click="goHomePage"
+          class="app-title navbar-item is-size-4 is-family-monospace"
+        >
+          Noteballs
         </div>
 
         <a
@@ -67,6 +70,7 @@
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { useStoreAuth } from "@/store/storeAuth";
+import { useRouter } from "vue-router";
 /*
   store
 */
@@ -96,9 +100,15 @@ const logout = () => {
   showMobileNav.value = false;
   storeAuth.logoutUser();
 };
+
+const router = useRouter();
+const goHomePage = () => router.push("/");
 </script>
 
 <style>
+.app-title {
+  cursor: pointer;
+}
 @media (max-width: 1023px) {
   .navbar-menu {
     position: absolute;
