@@ -29,7 +29,7 @@ import uuid from "uuid4";
 import ViewNote from "@/pages/ViewNote.vue";
 import TheTextarea from "../components/TheTextarea.vue";
 
-let storeNotes = useNotesStore();
+const storeNotes = useNotesStore();
 
 let newNote = ref("");
 

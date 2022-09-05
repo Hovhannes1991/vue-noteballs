@@ -7,6 +7,10 @@
 
 <script setup>
 import TheNavBar from "./layouts/TheNavBar.vue";
+import { useNotesStore } from "./store/notesStore";
+
+const storeNotes = useNotesStore();
+storeNotes.getNotes();
 </script>
 
 <style scoped></style>

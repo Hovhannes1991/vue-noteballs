@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import TheTextarea from "../components/TheTextarea.vue";
 import { useNotesStore } from "../store/notesStore";
 import { useRouter } from "vue-router";
@@ -27,10 +27,16 @@ const props = defineProps(["id"]);
 const notesStore = useNotesStore();
 const router = useRouter();
 
-const currentText = notesStore.getNoteCurrentValue(+props.id);
-const text = ref(currentText);
+let text = ref(null);
+const getData = async () => {
+  const currentNote = await notesStore.getNoteCurrentValue(props.id);
+  text.value = currentNote.content;
+};
+
+onMounted(getData());
+
 const save = async () => {
-  notesStore.updateNote(+props.id, text.value);
+  notesStore.updateNote(props.id, text.value);
   router.push({ name: "view-notes" });
 };
 </script>

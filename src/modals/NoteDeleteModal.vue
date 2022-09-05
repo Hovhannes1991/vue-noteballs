@@ -1,7 +1,7 @@
 <template>
   <div class="modal is-active">
     <div class="modal-background"></div>
-    <div  ref="modalContent" class="modal-card">
+    <div ref="modalContent" class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Delete Note</p>
         <button @click="cancel" class="delete" aria-label="close"></button>

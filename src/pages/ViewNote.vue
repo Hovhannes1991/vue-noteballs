@@ -3,8 +3,9 @@
     <div class="card-content">
       <div class="content">
         {{ note.content }}
-        <div class="has-text-right has-text-grey-light mt-2">
-          <small>{{ charactersLength }}</small>
+        <div class="columns is-mobile has-text-grey-light mt-2">
+          <small class="column">{{ formatedDate }}</small>
+          <small class="column has-text-right">{{ charactersLength }}</small>
         </div>
       </div>
     </div>
@@ -26,6 +27,7 @@
 </template>
 
 <script setup>
+import { useDateFormat } from "@vueuse/core";
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import NoteDeleteModal from "@/modals/NoteDeleteModal.vue";
@@ -44,6 +46,9 @@ const charactersLength = computed(() => {
   const text = length > 1 ? "characters" : "caracter";
   return length + " " + text;
 });
+
+const date = new Date(props.note.date);
+const formatedDate = useDateFormat(date, 'DD-MM-YYYY');
 
 const emits = defineEmits(["on-delete-note"]);
 
