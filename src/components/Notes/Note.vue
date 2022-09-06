@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="card mb-4"
-  >
+  <div class="card mb-4">
     <div class="card-content">
       <div class="content">
         {{ note.content }}
@@ -13,7 +11,7 @@
     </div>
     <footer class="card-footer">
       <RouterLink
-        :to="`/editNote/${ note.id }`"
+        :to="`/editNote/${note.id}`"
         class="card-footer-item"
         href="#"
       >
@@ -40,54 +38,53 @@
   imports
 */
 
-  import { computed, reactive } from 'vue'
-  import { useDateFormat } from '@vueuse/core'
-  import ModalDeleteNote from '@/components/Notes/ModalDeleteNote.vue'
-  import { useStoreNotes } from '@/stores/storeNotes'
+import { computed, reactive } from "vue";
+import { useDateFormat } from "@vueuse/core";
+import ModalDeleteNote from "@/components/Notes/ModalDeleteNote.vue";
+import { useStoreNotes } from "@/stores/storeNotes";
 
 /*
   props
 */
 
-  const props = defineProps({
-    note: {
-      type: Object,
-      required: true
-    }
-  })
+const props = defineProps({
+  note: {
+    type: Object,
+    required: true,
+  },
+});
 
 /*
   store
 */
 
-  const storeNotes = useStoreNotes()
+const storeNotes = useStoreNotes();
 
 /*
   date formatted
 */
 
-  const dateFormatted = computed(() => {
-    let date = new Date(parseInt(props.note.date))
-    let formattedDate = useDateFormat(date, 'MM-DD-YYYY @ HH:mm')
-    return formattedDate.value
-  }) 
+const dateFormatted = computed(() => {
+  let date = new Date(parseInt(props.note.date));
+  let formattedDate = useDateFormat(date, "MM-DD-YYYY @ HH:mm");
+  return formattedDate.value;
+});
 
 /*
   character length
 */
 
-  const characterLength = computed(() => {
-    let length = props.note.content.length
-    let description = length > 1 ? 'characters' : 'character'
-    return `${ length } ${ description }`
-  })
+const characterLength = computed(() => {
+  let length = props.note.content.length;
+  let description = length > 1 ? "characters" : "character";
+  return `${length} ${description}`;
+});
 
 /*
   modals
 */
 
-  const modals = reactive({
-    deleteNote: false
-  })
-
+const modals = reactive({
+  deleteNote: false,
+});
 </script>

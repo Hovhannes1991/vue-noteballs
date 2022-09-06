@@ -2,14 +2,10 @@
   <div class="auth">
     <div class="tabs is-centered">
       <ul>
-        <li
-          :class="{ 'is-active' : !register }"
-        >
+        <li :class="{ 'is-active': !register }">
           <a @click.prevent="register = false">Login</a>
         </li>
-        <li
-          :class="{ 'is-active' : register }"
-        >
+        <li :class="{ 'is-active': register }">
           <a @click.prevent="register = true">Register</a>
         </li>
       </ul>
@@ -21,9 +17,7 @@
           {{ formTitle }}
         </div>
 
-        <form
-          @submit.prevent="onSubmit"
-        >
+        <form @submit.prevent="onSubmit">
           <div class="field">
             <label class="label">Email</label>
             <div class="control">
@@ -32,7 +26,7 @@
                 class="input"
                 placeholder="e.g. alexsmith@gmail.com"
                 type="email"
-              >
+              />
             </div>
           </div>
 
@@ -44,7 +38,7 @@
                 class="input"
                 placeholder="Enter a password"
                 type="password"
-              >
+              />
             </div>
           </div>
 
@@ -56,7 +50,6 @@
             </p>
           </div>
         </form>
-
       </div>
     </div>
   </div>
@@ -67,55 +60,53 @@
   imports
 */
 
-  import { ref, computed, reactive } from 'vue'
-  import { useStoreAuth } from '@/stores/storeAuth'
+import { ref, computed, reactive } from "vue";
+import { useStoreAuth } from "@/stores/storeAuth";
 
 /*
   store
 */
 
-  const storeAuth = useStoreAuth()
+const storeAuth = useStoreAuth();
 
 /*
   register / login
 */
 
-  const register = ref(false)
+const register = ref(false);
 
 /*
   form title
 */
 
-  const formTitle = computed(() => {
-    return register.value ? 'Register' : 'Login'
-  })
+const formTitle = computed(() => {
+  return register.value ? "Register" : "Login";
+});
 
 /*
   credentials
 */
 
-  const credentials = reactive({
-    email: '',
-    password: ''
-  })
+const credentials = reactive({
+  email: "",
+  password: "",
+});
 
 /*
   submit
 */
 
-  const onSubmit = () => {
-    if (!credentials.email || !credentials.password) {
-      alert('Please enter an email and password gosh darnit!')
-    }
-    else {
-      if (register.value) {
-        storeAuth.registerUser(credentials)
-      }
-      else {
-        storeAuth.loginUser(credentials)
-      }
+const onSubmit = () => {
+  if (!credentials.email || !credentials.password) {
+    alert("Please enter an email and password gosh darnit!");
+  } else {
+    if (register.value) {
+      storeAuth.registerUser(credentials);
+    } else {
+      storeAuth.loginUser(credentials);
     }
   }
+};
 </script>
 
 <style>

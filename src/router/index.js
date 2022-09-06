@@ -1,47 +1,31 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { useStoreAuth } from '@/stores/storeAuth'
-import ViewNotes from '@/views/ViewNotes.vue'
-import ViewEditNote from '@/views/ViewEditNote.vue'
-import ViewStats from '@/views/ViewStats.vue'
-import ViewAuth from '@/views/ViewAuth.vue'
+import { createRouter, createWebHistory } from "vue-router";
 
-const routes = [
-  {
-    path: '/',
-    name: 'notes',
-    component: ViewNotes
-  },
-  {
-    path: '/editNote/:id',
-    name: 'edit-note',
-    component: ViewEditNote
-  },
-  {
-    path: '/stats',
-    name: 'stats',
-    component: ViewStats
-  },
-  {
-    path: '/auth',
-    name: 'auth',
-    component: ViewAuth
-  }
-]
+import { routes } from "./routes";
+import * as middlewares from "@/middlewares/index.js";
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
+  history: createWebHistory(),
+  routes,
+});
 
 // navigation guards
 router.beforeEach(async (to, from) => {
-  const storeAuth = useStoreAuth()
-  if (!storeAuth.user.id && to.name !== 'auth') {
-    return { name: 'auth' }
+  if (from.meta?.middlewares) {
+    const guards = Array.isArray(from.meta.middlewares)
+      ? from.meta.middlewares
+      : [from.meta.middlewares];
+    console.log(guards);
+    guards.forEach((guard) => {
+      middlewares[guard]();
+    });
   }
-  if (storeAuth.user.id && to.name === 'auth') {
-    return false
-  }
-})
+  // const storeAuth = useStoreAuth();
+  // if (!storeAuth.user.id && to.name !== "auth") {
+  //   return { name: "auth" };
+  // }
+  // if (storeAuth.user.id && to.name === "auth") {
+  //   return false;
+  // }
+});
 
-export default router
+export default router;

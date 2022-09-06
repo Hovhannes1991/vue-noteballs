@@ -11,25 +11,25 @@
   imports
 */
 
-  import { onMounted } from 'vue'
-  import NavBar from '@/components/Layout/NavBar.vue'
-  import { useStoreAuth } from '@/stores/storeAuth'
+import { onMounted } from "vue";
+import NavBar from "@/components/Layout/NavBar.vue";
+import { useStoreAuth } from "@/stores/storeAuth";
 
 /*
   store
 */
 
-  const storeAuth = useStoreAuth()
+const storeAuth = useStoreAuth();
 
 /*
   mounted
 */
 
-  onMounted(() => {
-    storeAuth.init()
-  })
+onMounted(() => {
+  storeAuth.init();
+});
 </script>
 
 <style>
-@import 'bulma/css/bulma.min.css';
+@import "bulma/css/bulma.min.css";
 </style>

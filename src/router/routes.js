@@ -1,21 +1,39 @@
-const ViewNotes = () => import("@/pages/ViewNotes.vue");
-const ViewStats = () => import("@/pages/ViewStats.vue");
-const EditNote = () => import("@/pages/EditNote.vue");
-const ViewAuth = () => import("@/pages/ViewAuth.vue");
+import ViewNotes from "@/views/ViewNotes.vue";
+import ViewEditNote from "@/views/ViewEditNote.vue";
+import ViewStats from "@/views/ViewStats.vue";
+import ViewAuth from "@/views/ViewAuth.vue";
 
 export const routes = [
-  { path: "/", redirect: "view-stats" },
-  { path: "/view-notes", name: "view-notes", component: ViewNotes },
   {
-    path: "/edit-note/:id",
-    name: "edit-note",
-    component: EditNote,
-    props: true,
+    path: "/",
+    name: "notes",
+    component: ViewNotes,
+    meta: {
+      middlewares: "auth",
+    },
   },
-  { path: "/view-stats", name: "view-stats", component: ViewStats },
+  {
+    path: "/editNote/:id",
+    name: "edit-note",
+    component: ViewEditNote,
+    meta: {
+      middlewares: "auth",
+    },
+  },
+  {
+    path: "/stats",
+    name: "stats",
+    component: ViewStats,
+    meta: {
+      middlewares: "auth",
+    },
+  },
   {
     path: "/auth",
     name: "auth",
     component: ViewAuth,
+    meta: {
+      middlewares: "guest",
+    },
   },
 ];
