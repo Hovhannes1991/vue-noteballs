@@ -1,16 +1,35 @@
 <template>
-  <TheNavBar />
+  <NavBar />
+
   <div class="container is-max-desktop px-2 py-4">
     <RouterView />
   </div>
 </template>
 
 <script setup>
-import TheNavBar from "./layouts/TheNavBar.vue";
-import { useNotesStore } from "./store/notesStore";
+/*
+  imports
+*/
 
-const storeNotes = useNotesStore();
-storeNotes.getNotes();
+  import { onMounted } from 'vue'
+  import NavBar from '@/components/Layout/NavBar.vue'
+  import { useStoreAuth } from '@/stores/storeAuth'
+
+/*
+  store
+*/
+
+  const storeAuth = useStoreAuth()
+
+/*
+  mounted
+*/
+
+  onMounted(() => {
+    storeAuth.init()
+  })
 </script>
 
-<style scoped></style>
+<style>
+@import 'bulma/css/bulma.min.css';
+</style>
